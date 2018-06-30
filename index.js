@@ -5,6 +5,8 @@ const url = require('url');
 var StringDecoder = require('string_decoder').StringDecoder;
 var env = require('./config');
 const fs = require('fs');
+const handlers = require('./lib/handlers.js');
+
 
 //the http server
 var httpServer = http.createServer(function(req,res){
@@ -92,24 +94,10 @@ httpsServer.listen(env.httpsPort,function(){
 	console.log("now listening on port " + env.httpsPort);
 });
 
-// Define all the handlers
-var handler = {};
-// Sample handler
-handler.sample = function (data, callback){
-	callback(406,{'name':'sample handler'})
-};
-//Ping handler
-handler.ping = function(data,callback){
-  callback(200);
-};
 
-// Not found handler
-handler.notFound = function(data,callback){
- callback(404);
-};
 // Define the request router
 
 var router = {
-	'sample' : handler.sample,
-	'ping' : handler.ping
+	'sample' : handlers.sample,
+	'ping' : handlers.ping
 }
